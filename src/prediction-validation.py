@@ -4,8 +4,8 @@
 import sys
 
 # Open the window.txt file and read the averanging window size
-#with open(sys.argv[1],'r') as file1:
-with open('window.txt','r') as file1:
+with open(sys.argv[1],'r') as file1:
+#with open('window.txt','r') as file1:
     window=int(file1.read())
 print('The size of averaging window is %d.' % window)
 
@@ -14,8 +14,8 @@ print('The size of averaging window is %d.' % window)
 print('processing actual data ...')
 Actual=[]
 i=0
-#with open(sys.argv[2],'r') as file2:
-with open('actual-test.txt','r') as file2:
+with open(sys.argv[2],'r') as file2:
+#with open('actual-test.txt','r') as file2:
     actual_data=file2.readlines()
     
     # Read each line and put the data into a list assuming pipe-delimited
@@ -40,8 +40,7 @@ with open('actual-test.txt','r') as file2:
 print('processing predicted data ...')
 Predicted=[]
 i=0
-#with open(sys.argv[3],'r') as file3:
-with open('predicted-test.txt','r') as file3:
+with open(sys.argv[3],'r') as file3:
     predict_data=file3.readlines()
     # Read each line and put the data into a list assuming pipe-delimited
     for line in predict_data:
@@ -63,9 +62,7 @@ with open('predicted-test.txt','r') as file3:
 
 # Compute the hourly-averaged error and write the results in 'comparison.txt'
 print('computing window-averaged errors ...')
-window_error=[]
-#with open(sys.argv[4],'w') as file4:
-with open('comparison.txt','w') as file4:
+with open(sys.argv[4],'w') as file4:
     for i in range(len(Predicted)-window+1):
         number=0 #'number' is the counter for the number of valid predictions found in one window
         error=0  #'error' is the sum of all the errors in one window
@@ -75,14 +72,13 @@ with open('comparison.txt','w') as file4:
                     error=error+abs(Predicted[j][stock]-Actual[j][stock])
                     number=number+1
         if number>0:
-            window_error.append(round(error/number,2))
-            c='%.2f' %window_error[i]
+            c='%.2f' %(error/number)
         else: # Ouput 'NA' when there is no valid prediction found in one window
-            window_error.append('NA')
-            c=window_error[i]
+            c='NA'
         # Write the pipe-delimited data in 'comparison.txt'
         a=str(i+1)
         b=str(i+window)
         line_str=a+'|'+b+'|'+c+'\n'
         file4.write(line_str)    
 print('Comparison has been done successfully!')
+
